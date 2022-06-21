@@ -52,7 +52,7 @@ class Ball:
             if np.dot(np.cross(np.array(offsets[i])[0], np.array(edge)[0]), np.array(triangle.normal)[0]) <= 0:
                 return None
 
-        return position, triangle.normal
+        return position
 
 
 if __name__ == "__main__":
@@ -108,12 +108,11 @@ if __name__ == "__main__":
                 ball.velocity += triangle.normal * np.dot(np.array(ball.velocity)
                                                           [0], np.array(triangle.normal)[0]) * -(1 + coefficient_of_restitution)
 
-                normal = collision[1]
-                normal_force = np.dot(np.array(normal)[
+                normal_force = np.dot(np.array(triangle.normal)[
                                       0], np.array([0, 0, 1])) * ball.mass * 9.81
                 rolling_resistance = normal_force * rolling_resistance_coefficient
                 planar_velocity = ball.velocity - \
-                    np.dot(np.array(normal)[0], np.array(ball.velocity)[0])
+                    np.dot(np.array(triangle.normal)[0], np.array(ball.velocity)[0])
                 planar_velocity_direction = normalize(planar_velocity)
                 rolling_resistance_direction = -planar_velocity_direction
                 rolling_resistance_dv = rolling_resistance_direction * \
